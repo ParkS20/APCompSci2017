@@ -1,15 +1,16 @@
 import processing.video.*;
- 
+import processing.sound.*;
+SoundFile file;
  
 Capture cam;
 Capture cam2;
-int count=0;
+int count=1;
 PImage myImg=null;
 PImage myImg2=null;
  
 void setup() {
-  frameRate(1);
- 
+  frameRate(1000);
+  file = new SoundFile(this, "/Users/parks20/Documents/Processing/libraries/sound/src/processing/sound/alarm.mp3"); 
   size(600, 300);
   cam = new Capture(this, 320, 240, 30);
   cam.start();
@@ -39,29 +40,32 @@ void draw() {
           loadPixels();
           myImg.loadPixels();
           myImg2.loadPixels();
-          String message = ""; 
-          /*
+          
           int change = 0;
-          int threshold = 1000;//YOU WILL NEED TO TWEAK
+          int threshold = 100;//YOU WILL NEED TO TWEAK
                             //VALUE COULD BE MUCH HIGHER
-          */
+          
         //no need to look at all pixels
         //a sample of 200 should do
-      for (int i = 0; i < 200; i++) {
+      for (int i = 0; i < 200 && count >1; i++) {
           float r = red(myImg.pixels[i]);
           float r2 = red(myImg2.pixels[i]);
-          if((r+40)<r2 && (r-40)>r2){
-             if(message != "Motion Detected!"){
-                 message = "Motion Detected!";  
-                 System.out.println(message);
-             }
+          if((r+40)<r2 || (r-40)>r2){
+             change ++; 
           }
             
           //you may want to compare r to r2
  
  
       }//for loop ended
- 
+      if(change>threshold){
+        System.out.println("Motion Detected!");
+        
+        myImg2 = null; 
+        myImg = null; 
+        count = 0; 
+        file.play(); 
+      }
            //once change is greater than threshold
           //println - motion has been detected
           //when motion is detected you will wan to :
