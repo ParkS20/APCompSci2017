@@ -33,6 +33,8 @@ public class BoardSpace  extends JPanel implements Runnable, MouseListener{
     BufferedImage shotImage;
     BufferedImage playerImage;
     String message = "Click Board to Start";
+    String startLaserMessage = "Click Enter for Laser (only have 1 sec)"; 
+    String startShotMessage = "Click Space for Shooting"; 
     String score = "Score: "; 
     String Timer = "";
     private Thread animator;
@@ -100,9 +102,20 @@ public class BoardSpace  extends JPanel implements Runnable, MouseListener{
         FontMetrics metr2 = this.getFontMetrics(small1);
         g.setFont(small2);
         g.drawString(Timer, 20, 20);
+        
+        Font small3 = new Font("Helvetica", Font.BOLD, 16);
+        FontMetrics metr3 = this.getFontMetrics(small);
+        g.setFont(small3);
+        g.drawString(startLaserMessage, d.width/2 - (startLaserMessage.length() * (4)), d.height/2 + 20);
+        
+        Font small4 = new Font("Helvetica", Font.BOLD, 16);
+        FontMetrics metr4 = this.getFontMetrics(small);
+        g.setFont(small4);
+        g.drawString(startShotMessage, d.width/2 - (startShotMessage.length()*(4)), d.height/2 + 40);
         if(playStart){
             int ax = 10; 
             int ay = 10; 
+            pl.x = BOARD_WIDTH/2 - 40;
             count = 0; 
             for(int r=0; r<a.length;r++){
                 for(int c=0; c<a[0].length; c++){
@@ -113,7 +126,12 @@ public class BoardSpace  extends JPanel implements Runnable, MouseListener{
                 ax = 10; 
                 ay += 30; 
             }
-            laserTimer = 0; 
+            for(int j=shotsy.size()-1; j>0;j--){
+                shotsx.remove(j);
+                shotsy.remove(j);
+            }
+            laserTimer = 0.0; 
+            Timer= "Laser Time" + laserTimer; 
             playStart = false; 
         }
         if (ingame) {
@@ -243,6 +261,8 @@ public class BoardSpace  extends JPanel implements Runnable, MouseListener{
         int x = e.getX();
         int y = e.getY();
         message = "";
+        startShotMessage = ""; 
+        startLaserMessage = ""; 
         ingame = true; 
         playStart = true; 
     }
