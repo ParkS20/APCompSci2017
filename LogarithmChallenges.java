@@ -49,7 +49,7 @@ public class LogarithmChallenges{
         int randomNum; 
         for(int i=0; i<10; i++){
             randomNum = (int)(Math.random() * ((max - min) + 1)) + min;
-            if(prime(randomNum) == true){
+            if(prime(randomNum) == true && duplicate(i, nums) == false){
                 nums[i] = randomNum; 
             }else{
                 i--; 
@@ -91,5 +91,13 @@ public class LogarithmChallenges{
                 prime = false; 
         }
         return prime; 
+    }
+    public boolean duplicate(int num, int[] array){
+        boolean duplicate = false; 
+        for(int i = 0; i<num; i++){
+            if(array[num] == array[i])
+                duplicate = true; 
+        }
+        return duplicate; 
     }
 }
