@@ -6,8 +6,7 @@ public class LogarithmChallenges{
         int number = 26; 
         //goldbach(number); 
         int[] prime = arrayOfPrime();
-        System.out.println(Arrays.toString(prime)); 
-        insertion(prime); 
+        System.out.println(Arrays.toString(insertion(prime))); 
     }
     public void selection(int[] nums){
         int n; 
@@ -43,13 +42,13 @@ public class LogarithmChallenges{
         System.out.println(primeNum1 + ", " + primeNum2); 
     }
     public int[] arrayOfPrime(){
-        int[] nums = new int[10];
-        int max = 200;
-        int min = 1;
+        int[] nums = new int[50];
+        int max = 300;
+        int min = 2;
         int randomNum; 
-        for(int i=0; i<10; i++){
+        for(int i=0; i<nums.length; i++){
             randomNum = (int)(Math.random() * ((max - min) + 1)) + min;
-            if(prime(randomNum) == true && duplicate(i, nums) == false){
+            if(prime(randomNum) == true && duplicate(randomNum, i, nums) == false){
                 nums[i] = randomNum; 
             }else{
                 i--; 
@@ -57,7 +56,7 @@ public class LogarithmChallenges{
         }
         return nums; 
     }
-    public void insertion (int[] num){
+    public int[] insertion (int[] num){
         boolean goBack = false; 
         int last; 
         int place =1; 
@@ -82,7 +81,10 @@ public class LogarithmChallenges{
                 }
             }
         }
-        System.out.println(Arrays.toString(num)); 
+        return num; 
+    }
+    public void binarySearch(int[] num){
+        
     }
     public boolean prime (int num){
         boolean prime = true; 
@@ -92,10 +94,11 @@ public class LogarithmChallenges{
         }
         return prime; 
     }
-    public boolean duplicate(int num, int[] array){
+    public boolean duplicate(int num, int place, int[] array){
         boolean duplicate = false; 
-        for(int i = 0; i<num; i++){
-            if(array[num] == array[i])
+        array[place] = num; 
+        for(int i = 0; i<place; i++){
+            if(array[place] == array[i])
                 duplicate = true; 
         }
         return duplicate; 
