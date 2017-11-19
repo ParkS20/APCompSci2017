@@ -5,8 +5,14 @@ public class LogarithmChallenges{
         //selection(nums);
         int number = 26; 
         //goldbach(number); 
-        int[] prime = arrayOfPrime();
-        System.out.println(Arrays.toString(insertion(prime))); 
+        int length = 50;
+        int[] prime = arrayOfPrime(length);
+        int max = length;
+        int min = 0;
+        int randomNum = (int)(Math.random() * ((max - min) + 1)) + min;
+        prime = insertion(prime); 
+        sequential(randomNum, prime);   
+        binarySearch(randomNum, prime);
     }
     public void selection(int[] nums){
         int n; 
@@ -41,9 +47,9 @@ public class LogarithmChallenges{
         }
         System.out.println(primeNum1 + ", " + primeNum2); 
     }
-    public int[] arrayOfPrime(){
-        int[] nums = new int[50];
-        int max = 300;
+    public int[] arrayOfPrime(int number){
+        int[] nums = new int[number];
+        int max = 500;
         int min = 2;
         int randomNum; 
         for(int i=0; i<nums.length; i++){
@@ -83,8 +89,48 @@ public class LogarithmChallenges{
         }
         return num; 
     }
-    public void binarySearch(int[] num){
-        
+    public void sequential(int num, int[]list){
+        int spot=0; 
+        int counter = 0; 
+        for(int i=0; i<list.length; i++){
+            if(list[i] == list[num]){
+                spot = i; 
+                counter = i + 1; 
+                i += list.length;  
+            }
+        }
+        System.out.println("Sequential: ");
+        System.out.println("Spot: " + spot); 
+        System.out.println("Iterations: " + counter); 
+    }
+    public void binarySearch(int num, int[] list){
+        boolean cut = true; 
+        int counter = 1; 
+        int spot=0; 
+        int middle = list.length/2; 
+        while(cut){
+            if(list[num]>list[middle]){
+                counter ++; 
+                try{
+                    middle = middle + (list.length/((int)(Math.pow(2, counter)))); 
+                }catch(Exception e){
+                    middle += 1; 
+                }
+            }else if(list[num] == list[middle]){
+                cut = false; 
+                spot = middle; 
+            }else{
+                counter ++; 
+                try{
+                    middle = middle - (list.length/((int)(Math.pow(2, counter)))); 
+                }catch(Exception e){
+                    middle -=1; 
+                }
+            }
+        }
+        System.out.println("Binary Search: "); 
+        System.out.println("Spot: " + spot); 
+        System.out.println("Iterations: " + counter); 
     }
     public boolean prime (int num){
         boolean prime = true; 
